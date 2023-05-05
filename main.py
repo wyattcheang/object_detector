@@ -320,7 +320,8 @@ class App(ctk.CTk):
 def process(frame):
     areas = []
     perimeters = []
-    image = cv2.imread("Image/" + require_data.image)
+    file_path = os.path.join("Image", require_data.image)
+    image = cv2.imread(file_path)
 
     # Define the maximum width
     max_width = 600
