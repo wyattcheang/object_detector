@@ -232,7 +232,8 @@ class App(ctk.CTk):
         super().__init__()
         # self.resizable(False, False)
         self.title("Image and Special Effect")
-        self.columnconfigure(1, minsize=700)
+        self.columnconfigure(1, minsize=660)
+        self.columnconfigure(2, minsize=350)
         # self.grid_columnconfigure(1, weight=1)
 
         self.file_frame = ComboBoxFrame(self, titles=["Image:"], callback=self.enable_button)
@@ -295,6 +296,12 @@ class App(ctk.CTk):
                                            "Contours"])
         self.image_frame.grid(row=0, column=1, rowspan=6, padx=(10, 10), pady=(10, 10), sticky="nsew")
 
+        self.result_frame = ctk.CTkFrame(self)
+        self.result_frame.grid(row=0, column=2, rowspan=6, padx=(10, 10), pady=(10, 10), sticky="nsew")
+        self.result_label = ctk.CTkLabel(self.result_frame, text="Result")
+        self.result_label.grid(row=0, column=0, padx=(20, 10), pady=(10, 10))
+
+
     def enable_button(self):
         print("called")
         if require_data.is_complete():
@@ -316,7 +323,7 @@ def process(frame):
     image = cv2.imread("Image/" + require_data.image)
 
     # Define the maximum width
-    max_width = 800
+    max_width = 600
 
     # Calculate the scale factor based on the maximum width
     scale_factor = max_width / image.shape[1]
@@ -341,7 +348,6 @@ def process(frame):
     frame.set_image(morph_img, 4)
 
     cont_img = contour_hierarchy(org_img, morph_img, areas, perimeters)
-    cv2.imshow("Cont", cont_img)
     frame.set_image(cont_img, 5)
     print(areas)
     print(perimeters)
